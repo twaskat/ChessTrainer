@@ -2,6 +2,7 @@ import React from 'react';
 import { useChessTutorial } from '../lib/stores/useChessTutorial';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
+import AIInsights from './AIInsights';
 
 const TutorialInstructions: React.FC = () => {
   const { getCurrentTutorial, getCurrentStep, currentStepIndex } = useChessTutorial();
@@ -67,6 +68,11 @@ const TutorialInstructions: React.FC = () => {
                 ? "Follow along with the tutorial by clicking 'Next' to proceed." 
                 : "Look at the highlighted squares and arrows for guidance."}
             </p>
+          </div>
+          
+          {/* AI Insights */}
+          <div className="mt-4">
+            <AIInsights />
           </div>
         </div>
       </CardContent>

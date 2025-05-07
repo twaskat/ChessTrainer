@@ -78,7 +78,13 @@ export const useChessTutorial = create<ChessTutorialState>()(
         chess,
         highlightSquares: firstStep.highlightSquares || [],
         showArrow: firstStep.showArrow || null,
+        aiInsight: null,
       });
+      
+      // Fetch AI insight for the initial position
+      setTimeout(() => {
+        get().fetchAIInsight();
+      }, 300);
     },
     
     selectTutorial: (id: string) => {
@@ -92,16 +98,23 @@ export const useChessTutorial = create<ChessTutorialState>()(
         chess.load(firstStep.fen);
       }
       
+      // Reset AI insight when selecting a new tutorial
       set({
         currentTutorialId: id,
         currentStepIndex: 0,
         chess,
         highlightSquares: firstStep.highlightSquares || [],
         showArrow: firstStep.showArrow || null,
+        aiInsight: null
       });
       
       // Play success sound when tutorial is selected
       useAudio.getState().playSuccess();
+      
+      // Fetch AI insight for the initial position of the new tutorial
+      setTimeout(() => {
+        get().fetchAIInsight();
+      }, 300);
     },
     
     nextStep: () => {
@@ -124,11 +137,18 @@ export const useChessTutorial = create<ChessTutorialState>()(
         }
       }
       
+      // Reset AI insight when moving to the next step
       set({
         currentStepIndex: nextIndex,
         highlightSquares: nextStep.highlightSquares || [],
         showArrow: nextStep.showArrow || null,
+        aiInsight: null
       });
+      
+      // Fetch AI insight for the new position
+      setTimeout(() => {
+        get().fetchAIInsight();
+      }, 300);
     },
     
     previousStep: () => {
@@ -145,11 +165,18 @@ export const useChessTutorial = create<ChessTutorialState>()(
         chess.load(prevStep.fen);
       }
       
+      // Reset AI insight when moving to the previous step
       set({
         currentStepIndex: prevIndex,
         highlightSquares: prevStep.highlightSquares || [],
         showArrow: prevStep.showArrow || null,
+        aiInsight: null
       });
+      
+      // Fetch AI insight for the new position
+      setTimeout(() => {
+        get().fetchAIInsight();
+      }, 300);
     },
     
     goToStep: (index: number) => {
@@ -165,11 +192,18 @@ export const useChessTutorial = create<ChessTutorialState>()(
         chess.load(step.fen);
       }
       
+      // Reset AI insight when jumping to a specific step
       set({
         currentStepIndex: index,
         highlightSquares: step.highlightSquares || [],
         showArrow: step.showArrow || null,
+        aiInsight: null
       });
+      
+      // Fetch AI insight for the new position
+      setTimeout(() => {
+        get().fetchAIInsight();
+      }, 300);
     },
     
     restart: () => {
@@ -186,14 +220,21 @@ export const useChessTutorial = create<ChessTutorialState>()(
         chess.reset();
       }
       
+      // Reset AI insight when restarting the tutorial
       set({
         currentStepIndex: 0,
         highlightSquares: firstStep.highlightSquares || [],
         showArrow: firstStep.showArrow || null,
+        aiInsight: null
       });
       
       // Play success sound when restarting
       useAudio.getState().playSuccess();
+      
+      // Fetch AI insight for the initial position
+      setTimeout(() => {
+        get().fetchAIInsight();
+      }, 300);
     },
     
     // Computed getters
@@ -217,6 +258,50 @@ export const useChessTutorial = create<ChessTutorialState>()(
       const { currentStepIndex, getTotalSteps } = get();
       const totalSteps = getTotalSteps();
       return totalSteps > 0 ? Math.round((currentStepIndex / (totalSteps - 1)) * 100) : 0;
+    },
+    
+    fetchAIInsight: async () => {
+      const { chess, getCurrentStep, getCurrentTutorial } = get();
+      const currentStep = getCurrentStep();
+      const currentTutorial = getCurrentTutorial();
+      
+      if (!chess || !currentStep || !currentTutorial) {
+        return;
+      }
+      
+      // Set loading state
+      set({ isLoadingInsight: true });
+      
+      try {
+        // Get previous step if it exists for context
+        const prevStepIndex = get().currentStepIndex - 1;
+        const prevStep = prevStepIndex >= 0 ? 
+          currentTutorial.steps[prevStepIndex] : null;
+        
+        // Call API to get AI insights
+        const insight = await getChessInsights({
+          fen: chess.fen(),
+          move: currentStep.move,
+          notation: currentStep.notation,
+          previousMove: prevStep?.move,
+          difficulty: currentTutorial.difficulty
+        });
+        
+        set({ 
+          aiInsight: insight,
+          isLoadingInsight: false 
+        });
+      } catch (error) {
+        console.error("Error fetching AI insight:", error);
+        set({ 
+          aiInsight: {
+            insight: "Unable to generate AI insights at this time.",
+            tip: "Please continue with the tutorial as provided.",
+            concept: "Error occurred while fetching insights."
+          },
+          isLoadingInsight: false 
+        });
+      }
     },
   }))
 );
