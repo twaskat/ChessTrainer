@@ -31,7 +31,7 @@ const TutorialControls: React.FC = () => {
             <span className="text-sm font-medium text-muted-foreground">
               Step {currentStepIndex + 1} of {totalSteps}
             </span>
-            <Button variant="ghost" size="sm" onClick={toggleMute}>
+            <Button variant="ghost" size="sm" onClick={toggleMute} className="h-8 w-8 p-0">
               {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
             </Button>
           </div>
@@ -43,16 +43,16 @@ const TutorialControls: React.FC = () => {
               variant="outline"
               onClick={previousStep}
               disabled={isFirstStep}
-              className="flex-1"
+              className="flex-1 sm:px-4 px-2 h-10"
             >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Previous
+              <ArrowLeft className="sm:mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">Previous</span>
             </Button>
             
             <Button
               variant="outline"
               onClick={restart}
-              className="w-10 p-0 flex-shrink-0"
+              className="w-10 p-0 flex-shrink-0 h-10"
             >
               <RotateCcw className="h-4 w-4" />
             </Button>
@@ -61,10 +61,10 @@ const TutorialControls: React.FC = () => {
               variant="default"
               onClick={nextStep}
               disabled={isLastStep}
-              className="flex-1 bg-primary hover:bg-primary/90"
+              className="flex-1 bg-primary hover:bg-primary/90 sm:px-4 px-2 h-10"
             >
-              Next
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <span className="hidden sm:inline">Next</span>
+              <ArrowRight className="sm:ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>

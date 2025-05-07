@@ -8,8 +8,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, className }) => {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <header className="border-b bg-card">
+    <div className="min-h-screen bg-background text-foreground flex flex-col overflow-hidden">
+      <header className="border-b bg-card sticky top-0 z-10">
         <div className="container mx-auto p-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({ children, className }) => {
         </div>
       </header>
       
-      <main className={cn("flex-1", className)}>
+      <main className={cn("flex-1 overflow-y-auto", className)}>
         {children}
       </main>
       

@@ -50,13 +50,13 @@ const pieces = [
 
 const PieceGuide: React.FC = () => {
   return (
-    <Card className="shadow-md">
+    <Card className="shadow-md overflow-hidden">
       <CardHeader className="pb-2">
         <CardTitle>Chess Pieces Guide</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-6">
         <Tabs defaultValue="pawn" className="w-full">
-          <TabsList className="grid grid-cols-6 mb-4 h-14">
+          <TabsList className="grid grid-cols-6 mb-4 h-14 overflow-x-auto">
             {pieces.map(piece => (
               <TabsTrigger 
                 key={piece.id} 
@@ -72,17 +72,19 @@ const PieceGuide: React.FC = () => {
             ))}
           </TabsList>
           
-          {pieces.map(piece => (
-            <TabsContent key={piece.id} value={piece.id} className="space-y-2">
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg font-medium">{piece.name}</h3>
-                <span className="text-sm text-muted-foreground">
-                  Value: {piece.value}
-                </span>
-              </div>
-              <p className="text-sm text-muted-foreground">{piece.description}</p>
-            </TabsContent>
-          ))}
+          <div className="overflow-y-auto max-h-[calc(100vh-600px)] md:max-h-none">
+            {pieces.map(piece => (
+              <TabsContent key={piece.id} value={piece.id} className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-medium">{piece.name}</h3>
+                  <span className="text-sm text-muted-foreground">
+                    Value: {piece.value}
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground">{piece.description}</p>
+              </TabsContent>
+            ))}
+          </div>
         </Tabs>
       </CardContent>
     </Card>

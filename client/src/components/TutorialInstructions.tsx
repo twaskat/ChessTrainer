@@ -38,7 +38,7 @@ const TutorialInstructions: React.FC = () => {
   };
 
   return (
-    <Card className="shadow-md">
+    <Card className="shadow-md overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <CardTitle>{tutorial.title}</CardTitle>
@@ -48,7 +48,7 @@ const TutorialInstructions: React.FC = () => {
         </div>
         <p className="text-sm text-muted-foreground">{tutorial.description}</p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="overflow-y-auto max-h-[calc(100vh-320px)] md:max-h-none">
         <div className="space-y-4">
           <div>
             <h3 className="text-lg font-medium mb-1">Step {currentStepIndex + 1}</h3>
