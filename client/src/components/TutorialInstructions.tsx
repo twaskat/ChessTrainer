@@ -38,31 +38,31 @@ const TutorialInstructions: React.FC = () => {
   };
 
   return (
-    <Card className="shadow-md overflow-hidden">
-      <CardHeader className="pb-2">
+    <Card className="shadow-sm overflow-hidden">
+      <CardHeader className="pb-1 pt-2 px-3">
         <div className="flex justify-between items-start">
-          <CardTitle>{tutorial.title}</CardTitle>
-          <Badge className={getDifficultyColor(tutorial.difficulty)}>
+          <CardTitle className="text-base">{tutorial.title}</CardTitle>
+          <Badge className={`${getDifficultyColor(tutorial.difficulty)} text-xs`}>
             {tutorial.difficulty}
           </Badge>
         </div>
-        <p className="text-sm text-muted-foreground">{tutorial.description}</p>
+        <p className="text-xs text-muted-foreground mt-1">{tutorial.description}</p>
       </CardHeader>
-      <CardContent className="overflow-y-auto max-h-[calc(100vh-320px)] md:max-h-none">
-        <div className="space-y-4">
+      <CardContent className="p-3 overflow-y-auto max-h-[30vh] md:max-h-[35vh]">
+        <div className="space-y-2">
           <div>
-            <h3 className="text-lg font-medium mb-1">Step {currentStepIndex + 1}</h3>
-            <div className="flex items-center mb-2">
+            <div className="flex items-center justify-between mb-1">
+              <h3 className="text-sm font-medium">Step {currentStepIndex + 1}</h3>
               {currentStep.notation && (
-                <Badge variant="outline" className="mr-2 font-mono">
+                <Badge variant="outline" className="font-mono text-xs">
                   {currentStep.notation}
                 </Badge>
               )}
             </div>
-            <p className="text-muted-foreground">{currentStep.explanation}</p>
+            <p className="text-xs text-muted-foreground">{currentStep.explanation}</p>
           </div>
           
-          <div className="rounded-md bg-muted p-3 text-sm">
+          <div className="rounded-md bg-muted p-2 text-xs">
             <p className="italic text-muted-foreground">
               {currentStepIndex === 0 
                 ? "Follow along with the tutorial by clicking 'Next' to proceed." 
@@ -71,7 +71,7 @@ const TutorialInstructions: React.FC = () => {
           </div>
           
           {/* AI Insights */}
-          <div className="mt-4">
+          <div className="mt-2">
             <AIInsights />
           </div>
         </div>
