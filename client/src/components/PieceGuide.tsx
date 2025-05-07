@@ -50,18 +50,18 @@ const pieces = [
 
 const PieceGuide: React.FC = () => {
   return (
-    <Card className="shadow-sm overflow-hidden">
-      <CardHeader className="pb-1 pt-2 px-3">
-        <CardTitle className="text-base">Chess Pieces</CardTitle>
+    <Card className="shadow-sm overflow-hidden bg-gradient-to-r from-[#12192d] to-[#121626] border-[#1a2742]">
+      <CardHeader className="pb-1 pt-2 px-3 border-b border-[#1a2742]">
+        <CardTitle className="text-base text-[#00e6ff]" style={{ textShadow: '0 0 3px rgba(0, 230, 255, 0.3)' }}>Chess Pieces</CardTitle>
       </CardHeader>
-      <CardContent className="p-2">
+      <CardContent className="p-2 bg-gradient-to-b from-[#121626] to-[#0d111d]">
         <Tabs defaultValue="pawn" className="w-full">
-          <TabsList className="grid grid-cols-6 mb-2 h-10 overflow-x-auto">
+          <TabsList className="grid grid-cols-6 mb-2 h-10 overflow-x-auto bg-[#101522] border-[#1a2742] border">
             {pieces.map(piece => (
               <TabsTrigger 
                 key={piece.id} 
                 value={piece.id}
-                className="p-1"
+                className="p-1 data-[state=active]:bg-[#1a2742] data-[state=active]:text-[#00e6ff] data-[state=active]:shadow-[0_0_5px_rgba(0,230,255,0.3)]"
               >
                 <img 
                   src={piece.image} 
@@ -72,12 +72,12 @@ const PieceGuide: React.FC = () => {
             ))}
           </TabsList>
           
-          <div className="overflow-y-auto max-h-[80px]">
+          <div className="overflow-y-auto max-h-[80px] rounded-md bg-[#101522] border border-[#1a2742] p-2">
             {pieces.map(piece => (
               <TabsContent key={piece.id} value={piece.id} className="space-y-1">
                 <div className="flex items-center gap-1">
-                  <h3 className="text-sm font-medium">{piece.name}</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <h3 className="text-sm font-medium text-[#7df9ff]" style={{ textShadow: '0 0 2px rgba(0, 230, 255, 0.3)' }}>{piece.name}</h3>
+                  <span className="text-xs text-[#00e6ff]">
                     Value: {piece.value}
                   </span>
                 </div>

@@ -55,16 +55,18 @@ const ChessBoard: React.FC = () => {
 
   if (!chess) {
     return (
-      <Card className="shadow-lg">
+      <Card className="shadow-sm bg-gradient-to-r from-[#12192d] to-[#121626] border-[#1a2742]">
         <CardContent className="flex items-center justify-center h-80">
-          <p className="text-muted-foreground">Loading chess board...</p>
+          <p className="text-[#00e6ff] animate-pulse" style={{ textShadow: '0 0 5px rgba(0, 230, 255, 0.5)' }}>
+            Loading chess board...
+          </p>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="shadow-sm overflow-hidden">
+    <Card className="shadow-sm overflow-hidden bg-gradient-to-r from-[#12192d] to-[#121626] border-[#1a2742]">
       <CardContent className="p-1" id="chess-board-container">
         <Chessboard
           id="tutorial-board"

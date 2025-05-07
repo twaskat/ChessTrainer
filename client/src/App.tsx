@@ -39,8 +39,13 @@ function App() {
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <div className="animate-pulse text-primary text-xl">Loading Chess Tutorial...</div>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#12192d] to-[#0d111d]">
+        <div 
+          className="animate-pulse text-[#00e6ff] text-xl"
+          style={{ textShadow: '0 0 10px rgba(0, 230, 255, 0.6)' }}
+        >
+          Loading Chess Tutorial...
+        </div>
       </div>
     );
   }
