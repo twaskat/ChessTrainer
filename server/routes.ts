@@ -52,17 +52,49 @@ Format your response as JSON with the keys: "insight", "tip", and "concept". Kee
       const content = response.choices[0]?.message?.content || '';
       
       try {
-        // Parse the JSON response
-        const parsedResponse = JSON.parse(content);
+        // Clean up the response if it contains markdown code blocks
+        let cleanedContent = content;
+        
+        // Remove markdown code fences if present
+        if (cleanedContent.includes("```json")) {
+          cleanedContent = cleanedContent.replace(/```json\n|\n```/g, "");
+        } else if (cleanedContent.includes("```")) {
+          cleanedContent = cleanedContent.replace(/```\n|\n```/g, "");
+        }
+        
+        // Try to parse the result as JSON
+        const parsedResponse = JSON.parse(cleanedContent);
         return res.status(200).json(parsedResponse);
       } catch (parseError) {
-        // If JSON parsing fails, return a formatted response with the raw text
+        // If JSON parsing fails, extract insight, tip, concept using regex
         console.error("Failed to parse OpenAI response as JSON:", parseError);
-        return res.status(200).json({
-          insight: content.substring(0, 150) + "...",
-          tip: "API response format error. Please try again.",
-          concept: "Unable to determine chess concept."
-        });
+        
+        // Create a fallback response
+        const fallbackResponse = {
+          insight: "Unable to parse AI response properly.",
+          tip: "Please continue with the tutorial as provided.",
+          concept: "Chess position analysis."
+        };
+        
+        // Try to extract insight using regex
+        const insightMatch = content.match(/\"insight\":\s*\"([^\"]+)/);
+        if (insightMatch && insightMatch[1]) {
+          fallbackResponse.insight = insightMatch[1];
+        }
+        
+        // Try to extract tip using regex
+        const tipMatch = content.match(/\"tip\":\s*\"([^\"]+)/);
+        if (tipMatch && tipMatch[1]) {
+          fallbackResponse.tip = tipMatch[1];
+        }
+        
+        // Try to extract concept using regex
+        const conceptMatch = content.match(/\"concept\":\s*\"([^\"]+)/);
+        if (conceptMatch && conceptMatch[1]) {
+          fallbackResponse.concept = conceptMatch[1];
+        }
+        
+        return res.status(200).json(fallbackResponse);
       }
       
     } catch (error: any) {
