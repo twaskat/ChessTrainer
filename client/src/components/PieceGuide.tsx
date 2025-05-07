@@ -50,13 +50,13 @@ const pieces = [
 
 const PieceGuide: React.FC = () => {
   return (
-    <Card className="shadow-md overflow-hidden">
-      <CardHeader className="pb-2">
-        <CardTitle>Chess Pieces Guide</CardTitle>
+    <Card className="shadow-sm overflow-hidden">
+      <CardHeader className="pb-1 pt-2 px-3">
+        <CardTitle className="text-base">Chess Pieces</CardTitle>
       </CardHeader>
-      <CardContent className="pb-6">
+      <CardContent className="p-2">
         <Tabs defaultValue="pawn" className="w-full">
-          <TabsList className="grid grid-cols-6 mb-4 h-14 overflow-x-auto">
+          <TabsList className="grid grid-cols-6 mb-2 h-10 overflow-x-auto">
             {pieces.map(piece => (
               <TabsTrigger 
                 key={piece.id} 
@@ -66,22 +66,22 @@ const PieceGuide: React.FC = () => {
                 <img 
                   src={piece.image} 
                   alt={piece.name} 
-                  className="w-8 h-8 mx-auto"
+                  className="w-5 h-5 mx-auto"
                 />
               </TabsTrigger>
             ))}
           </TabsList>
           
-          <div className="overflow-y-auto max-h-[calc(100vh-600px)] md:max-h-none">
+          <div className="overflow-y-auto max-h-[80px]">
             {pieces.map(piece => (
-              <TabsContent key={piece.id} value={piece.id} className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-medium">{piece.name}</h3>
-                  <span className="text-sm text-muted-foreground">
+              <TabsContent key={piece.id} value={piece.id} className="space-y-1">
+                <div className="flex items-center gap-1">
+                  <h3 className="text-sm font-medium">{piece.name}</h3>
+                  <span className="text-xs text-muted-foreground">
                     Value: {piece.value}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground">{piece.description}</p>
+                <p className="text-xs text-muted-foreground">{piece.description}</p>
               </TabsContent>
             ))}
           </div>

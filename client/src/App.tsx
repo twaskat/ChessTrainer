@@ -48,12 +48,12 @@ function App() {
   return (
     <>
       <Layout>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-3 pb-16 overflow-y-auto">
-          <div className="lg:col-span-2 space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2 pb-10 overflow-y-auto">
+          <div className="lg:col-span-2 space-y-2">
             <ChessBoard />
             <TutorialControls />
           </div>
-          <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-80px)] pb-4 md:max-h-none md:overflow-visible">
+          <div className="space-y-2 overflow-y-auto max-h-[45vh] pb-2 md:max-h-none md:overflow-visible">
             <TutorialInstructions />
             <PieceGuide />
           </div>
