@@ -23,30 +23,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Construct the prompt for the OpenAI API
       const prompt = `
 You are a helpful chess coach providing insights about chess positions and moves.
+
+POSITION DETAILS:
 Current position (FEN): ${fen}
 ${move ? `Move just played: ${move}` : ''}
 ${notation ? `Move notation: ${notation}` : ''}
 ${previousMove ? `Previous move: ${previousMove}` : ''}
 Player skill level: ${difficulty || 'beginner'}
 
-Please provide:
-1. An insightful explanation about this position or move in 2-3 sentences.
-2. A practical tip for the player based on this position in 1-2 sentences.
-3. A brief mention of the chess concept being demonstrated (opening principle, tactic, etc.) in 1 sentence.
+INSTRUCTIONS:
+Analyze the current position and provide the following:
 
-Format your response as JSON with the keys: "insight", "tip", and "concept". Keep your explanations clear, concise, and appropriate for the player's skill level.
+1. INSIGHT: An insightful explanation about this position or move in 2-3 sentences. Focus on what makes this move or position important, any tactical or strategic elements present, and what the player should be thinking about. Tailor your explanation to the player's skill level.
+
+2. TIP: A practical, actionable tip for the player based on this position in 1-2 sentences. This should be something they can apply immediately to improve their understanding or execution.
+
+3. CONCEPT: Identify one chess concept being demonstrated in this position (opening principle, tactical motif, endgame technique, etc.) in a brief sentence. Name the specific concept and why it's relevant here.
+
+FORMAT:
+Format your response as valid JSON with the keys: "insight", "tip", and "concept". Keep your explanations clear, concise, and appropriate for the player's skill level.
+
+Example format:
+{
+  "insight": "Your explanation here...",
+  "tip": "Your practical tip here...",
+  "concept": "Your concept identification here..."
+}
 `;
 
-      // Call the OpenAI API
-      const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "You are a helpful chess coach." },
-          { role: "user", content: prompt }
-        ],
-        temperature: 0.7,
-        max_tokens: 300,
-      });
+      // Call the OpenAI API with fallback logic
+      let response;
+      try {
+        // First attempt with GPT-4o
+        response = await openai.chat.completions.create({
+          model: "gpt-4o", // Using GPT-4o for better chess analysis
+          messages: [
+            { role: "system", content: "You are a helpful chess coach with expertise in teaching players of all levels." },
+            { role: "user", content: prompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 300,
+        });
+      } catch (error: any) {
+        console.log("Falling back to GPT-3.5-turbo due to:", error.message);
+        // Fallback to GPT-3.5-turbo if GPT-4o is not available
+        response = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo", // Fallback model
+          messages: [
+            { role: "system", content: "You are a helpful chess coach with expertise in teaching players of all levels." },
+            { role: "user", content: prompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 300,
+        });
+      }
 
       // Extract the content from the response
       const content = response.choices[0]?.message?.content || '';

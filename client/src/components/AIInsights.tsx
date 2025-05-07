@@ -100,30 +100,48 @@ const AIInsights: React.FC = () => {
       </div>
       
       <div className="space-y-3 text-sm">
-        <div className="flex gap-2">
-          <div className="flex-shrink-0 mt-1">
-            <LightbulbIcon size={16} className="text-yellow-500" />
+        {aiInsight.error ? (
+          <div className="rounded-md bg-yellow-50 p-3 border border-yellow-200">
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mt-0.5">
+                <LightbulbIcon size={16} className="text-yellow-500" />
+              </div>
+              <div className="ml-3">
+                <p className="text-yellow-800">
+                  There was an issue generating AI insights. Please try refreshing.
+                </p>
+                <p className="text-yellow-700 mt-1 text-xs">{aiInsight.error}</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <p className="font-medium text-foreground">Insight</p>
-            <p className="text-muted-foreground">{aiInsight.insight}</p>
-          </div>
-        </div>
-        
-        <div className="flex gap-2">
-          <div className="flex-shrink-0 mt-1">
-            <BookOpenIcon size={16} className="text-primary" />
-          </div>
-          <div>
-            <p className="font-medium text-foreground">Tip</p>
-            <p className="text-muted-foreground">{aiInsight.tip}</p>
-          </div>
-        </div>
-        
-        <div className="pt-2 text-xs border-t border-border">
-          <span className="font-medium">Chess Concept: </span>
-          <span className="text-muted-foreground">{aiInsight.concept}</span>
-        </div>
+        ) : (
+          <>
+            <div className="flex gap-2">
+              <div className="flex-shrink-0 mt-1">
+                <LightbulbIcon size={16} className="text-yellow-500" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground">Insight</p>
+                <p className="text-muted-foreground">{aiInsight.insight}</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-2">
+              <div className="flex-shrink-0 mt-1">
+                <BookOpenIcon size={16} className="text-primary" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground">Tip</p>
+                <p className="text-muted-foreground">{aiInsight.tip}</p>
+              </div>
+            </div>
+            
+            <div className="pt-2 text-xs border-t border-border">
+              <span className="font-medium">Chess Concept: </span>
+              <span className="text-muted-foreground">{aiInsight.concept}</span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
