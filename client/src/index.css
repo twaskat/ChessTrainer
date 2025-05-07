@@ -3,6 +3,39 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Dark futuristic theme colors */
+    --background: 220 20% 10%;
+    --foreground: 210 20% 98%;
+    
+    --card: 220 25% 13%;
+    --card-foreground: 210 20% 98%;
+    
+    --popover: 220 25% 13%;
+    --popover-foreground: 210 20% 98%;
+    
+    --primary: 180 100% 50%;
+    --primary-foreground: 220 20% 10%;
+    
+    --secondary: 205 100% 65%;
+    --secondary-foreground: 220 20% 10%;
+    
+    --muted: 220 20% 18%;
+    --muted-foreground: 210 20% 80%;
+    
+    --accent: 225 70% 60%;
+    --accent-foreground: 210 20% 98%;
+    
+    --destructive: 350 89% 60%;
+    --destructive-foreground: 210 20% 98%;
+    
+    --border: 220 20% 20%;
+    --input: 220 20% 18%;
+    --ring: 180 100% 50%;
+    
+    --radius: 0.5rem;
+  }
+  
   * {
     @apply border-border;
   }

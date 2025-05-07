@@ -74,10 +74,10 @@ const AIInsights: React.FC = () => {
   }
   
   return (
-    <div className="p-2 bg-card rounded-md shadow-sm border border-primary/10">
+    <div className="p-2 bg-card rounded-md shadow-md border border-primary/20 bg-gradient-to-br from-card to-[#101522]">
       <div className="flex justify-between items-center mb-1">
-        <h3 className="font-bold text-xs text-primary flex items-center gap-1">
-          <SparklesIcon size={12} />
+        <h3 className="font-bold text-xs text-primary flex items-center gap-1" style={{ textShadow: '0 0 5px rgba(0, 230, 255, 0.5)' }}>
+          <SparklesIcon size={12} className="text-[#00e6ff]" />
           AI Chess Coach
         </h3>
         <Button 
@@ -85,7 +85,7 @@ const AIInsights: React.FC = () => {
           size="sm" 
           onClick={() => fetchAIInsight()}
           title="Refresh AI insights"
-          className={`h-5 w-5 p-0 ${isLoadingInsight ? 'animate-spin' : ''}`}
+          className={`h-5 w-5 p-0 text-[#00e6ff] hover:text-[#7df9ff] hover:bg-[#101522] ${isLoadingInsight ? 'animate-spin' : ''}`}
           disabled={isLoadingInsight}
         >
           <RefreshCwIcon size={12} />
@@ -111,26 +111,26 @@ const AIInsights: React.FC = () => {
           <>
             <div className="flex gap-1">
               <div className="flex-shrink-0 mt-0.5">
-                <LightbulbIcon size={12} className="text-yellow-500" />
+                <LightbulbIcon size={12} className="text-[#ffe600]" />
               </div>
               <div>
-                <p className="font-medium text-foreground text-xs">Insight</p>
+                <p className="font-medium text-[#00e6ff] text-xs" style={{ textShadow: '0 0 2px rgba(0, 230, 255, 0.3)' }}>Insight</p>
                 <p className="text-muted-foreground text-xs">{aiInsight.insight}</p>
               </div>
             </div>
             
             <div className="flex gap-1">
               <div className="flex-shrink-0 mt-0.5">
-                <BookOpenIcon size={12} className="text-primary" />
+                <BookOpenIcon size={12} className="text-[#00e6ff]" />
               </div>
               <div>
-                <p className="font-medium text-foreground text-xs">Tip</p>
+                <p className="font-medium text-[#00e6ff] text-xs" style={{ textShadow: '0 0 2px rgba(0, 230, 255, 0.3)' }}>Tip</p>
                 <p className="text-muted-foreground text-xs">{aiInsight.tip}</p>
               </div>
             </div>
             
-            <div className="pt-1 text-xs border-t border-border">
-              <span className="font-medium">Concept: </span>
+            <div className="pt-1 text-xs border-t border-[#1a2742]">
+              <span className="font-medium text-[#7df9ff]">Concept: </span>
               <span className="text-muted-foreground">{aiInsight.concept}</span>
             </div>
           </>

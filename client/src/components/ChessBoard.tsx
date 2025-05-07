@@ -12,10 +12,11 @@ const ChessBoard: React.FC = () => {
   const customSquareStyles = useMemo(() => {
     const styles: Record<string, React.CSSProperties> = {};
     
-    // Add styles for highlighted squares
+    // Add styles for highlighted squares with futuristic glow
     highlightSquares.forEach(square => {
       styles[square] = {
-        background: 'radial-gradient(circle, rgba(0, 128, 128, 0.4) 25%, transparent 25%)',
+        background: 'radial-gradient(circle, rgba(0, 230, 255, 0.3) 30%, transparent 30%)',
+        boxShadow: 'inset 0 0 15px rgba(0, 230, 255, 0.5)',
         borderRadius: '50%',
       };
     });
@@ -26,7 +27,8 @@ const ChessBoard: React.FC = () => {
   // Setup custom arrows for showing moves
   // Casting to any to bypass type checking for arrows
   const customArrows = useMemo(() => {
-    return showArrow ? [[showArrow.from, showArrow.to, '#00bcd4']] as any : [];
+    // Bright cyan color for a futuristic glow effect
+    return showArrow ? [[showArrow.from, showArrow.to, '#00e6ff']] as any : [];
   }, [showArrow]);
 
   // Responsive board size
@@ -75,8 +77,8 @@ const ChessBoard: React.FC = () => {
           boardOrientation="white"
           showBoardNotation={true}
           animationDuration={300}
-          customDarkSquareStyle={{ backgroundColor: '#2D3748' }} // Dark grey
-          customLightSquareStyle={{ backgroundColor: '#E2E8F0' }} // Light grey
+          customDarkSquareStyle={{ backgroundColor: '#121626' }} // Dark blue-gray
+          customLightSquareStyle={{ backgroundColor: '#1d2b48' }} // Lighter blue-gray
         />
       </CardContent>
     </Card>
