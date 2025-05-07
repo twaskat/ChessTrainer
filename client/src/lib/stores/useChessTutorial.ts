@@ -3,6 +3,7 @@ import { subscribeWithSelector } from "zustand/middleware";
 import { Chess } from "chess.js";
 import { tutorials } from "../../data/tutorials";
 import { useAudio } from "./useAudio";
+import { ChessInsight, getChessInsights } from "../queryClient";
 
 export type HighlightSquare = string;
 
@@ -30,6 +31,8 @@ interface ChessTutorialState {
   chess: Chess | null;
   highlightSquares: HighlightSquare[];
   showArrow: { from: string; to: string } | null;
+  aiInsight: ChessInsight | null;
+  isLoadingInsight: boolean;
   
   // Actions
   initialize: () => void;
@@ -38,6 +41,7 @@ interface ChessTutorialState {
   previousStep: () => void;
   goToStep: (index: number) => void;
   restart: () => void;
+  fetchAIInsight: () => Promise<void>;
   
   // Computed
   getCurrentTutorial: () => Tutorial | null;
@@ -54,6 +58,8 @@ export const useChessTutorial = create<ChessTutorialState>()(
     chess: null,
     highlightSquares: [],
     showArrow: null,
+    aiInsight: null,
+    isLoadingInsight: false,
     
     initialize: () => {
       set({ tutorials, currentTutorialId: tutorials[0].id, chess: new Chess() });

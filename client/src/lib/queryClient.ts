@@ -23,6 +23,40 @@ export async function apiRequest(
   return res;
 }
 
+// Type for AI chess insights
+export interface ChessInsight {
+  insight: string;
+  tip: string;
+  concept: string;
+  error?: string;
+}
+
+export interface ChessInsightRequest {
+  fen: string;
+  move?: string;
+  notation?: string;
+  previousMove?: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+}
+
+/**
+ * Fetch chess insights from the OpenAI API for a given position and move
+ */
+export async function getChessInsights(request: ChessInsightRequest): Promise<ChessInsight> {
+  try {
+    const response = await apiRequest('POST', '/api/chess/insights', request);
+    return await response.json();
+  } catch (error: any) {
+    console.error('Error fetching chess insights:', error);
+    return {
+      insight: 'Unable to generate insights at this time.',
+      tip: 'Please continue with the tutorial.',
+      concept: 'Error occurred.',
+      error: error.message || 'Unknown error'
+    };
+  }
+}
+
 type UnauthorizedBehavior = "returnNull" | "throw";
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
