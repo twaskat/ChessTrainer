@@ -3,6 +3,9 @@ import { Chessboard } from 'react-chessboard';
 import { useChessTutorial } from '../lib/stores/useChessTutorial';
 import { Card, CardContent } from './ui/card';
 
+// Define a simpler structure for our internal usage
+type ArrowData = { from: string; to: string; color: string };
+
 const ChessBoard: React.FC = () => {
   const { chess, highlightSquares, showArrow, getCurrentStep } = useChessTutorial();
   const [boardWidth, setBoardWidth] = useState(500);
@@ -25,6 +28,7 @@ const ChessBoard: React.FC = () => {
 
   // Setup custom arrows for showing moves
   const customArrows = useMemo(() => {
+    // Return a simple string array format that Chessboard can understand
     return showArrow ? [[showArrow.from, showArrow.to, '#00bcd4']] : [];
   }, [showArrow]);
 
@@ -35,8 +39,8 @@ const ChessBoard: React.FC = () => {
       if (boardContainer) {
         // Set the board width to be responsive to container size
         const width = Math.min(
-          boardContainer.offsetWidth - 20, // Add some padding
-          window.innerHeight * 0.7 // Maximum height proportional to viewport
+          boardContainer.offsetWidth - 8, // Minimal padding
+          window.innerHeight * 0.5 // Maximum height proportional to viewport
         );
         setBoardWidth(width);
       }
@@ -61,8 +65,8 @@ const ChessBoard: React.FC = () => {
   }
 
   return (
-    <Card className="shadow-lg overflow-hidden">
-      <CardContent className="p-2 sm:p-4" id="chess-board-container">
+    <Card className="shadow-sm overflow-hidden">
+      <CardContent className="p-1" id="chess-board-container">
         <Chessboard
           id="tutorial-board"
           position={chess.fen()}
